@@ -1,13 +1,22 @@
 <?php
 namespace bysoft\_abstract;
+
+/**
+ *  
+ */
 class Http_Disclosure extends \bysoft\_abstract\Test {
-    
-    private function checkUrl($url,$needle){
+    /**
+     * Check if an needle is in a response of an url
+     * @param string $url
+     * @param string $needle
+     * @return boolean 
+     */
+    private function checkUrl($url, $needle){
         // @TODO : validate url / validate needle
-        $r = \bysoft\helpers\cURL_Helper::getHTTPStatusCode( $url );
+        $r = \bysoft\helpers\cURL_Helper::checkHTTPStatusCode( $url );
 
         if($r['result']){
-            // 'return' is true, we got a HTTP 200 status
+            // 'result' is true, we got a HTTP 200 status
             if(strpos($r['content'],$needle)!==false){
                 return true;
             }else{
@@ -16,13 +25,20 @@ class Http_Disclosure extends \bysoft\_abstract\Test {
         }
     }
     
+    /**
+     * Detect if the response contains the word "Index" 
+     * @param string $url
+     * @return bool 
+     */
     protected function folderIsReadable($url){
         return $this->checkUrl($url,'Index'); // Index = directory listing
     }
-    protected function fileIsReadable($url,$needle){
-        return $this->checkUrl($url,$needle);
-    }
     
+    
+    /**
+     * Run this test
+     * @return $this->status 
+     */
     final function run(){
         parent::run();
         $this->status = self::STATUS_RUNNING;
@@ -32,7 +48,7 @@ class Http_Disclosure extends \bysoft\_abstract\Test {
 
         if(!empty($this->arrFiles)){
             foreach($this->arrFiles as $file){
-                if($this->fileIsReadable($host.$file['url'], $file['needle'])){
+                if($this->checkUrl($host.$file['url'], $file['needle'])){
                     $this->errMessage .= "\t". $host. $file['url'] . " => ".$file['message'].".\r\n";
                     $this->status = self::STATUS_FAIL;
                 }
