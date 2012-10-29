@@ -11,9 +11,7 @@ class cURL_Helper {
         $content = ob_get_contents();
         $retCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         ob_end_clean();
-        if ($retCode == $code)
-            return array('result' =>true, 'content' => $content);
-        return array('result' =>false, 'content' => $content);
+        return array('result' => $retCode, 'content' => $content);
     }
     
     /**

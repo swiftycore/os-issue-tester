@@ -1,7 +1,7 @@
 <?php
 namespace bysoft\tests\joomla;
 
-class File_Disclosure extends \bysoft\_abstract\Http_Disclosure {
+class File_Disclosure extends \bysoft\code\Http_Disclosure {
     
     protected $arrFolders = array();
     protected $arrFiles = array();

@@ -1,7 +1,7 @@
 <?php
 namespace bysoft\_abstract;
 
-class Test implements \bysoft\interfaces\Test {
+abstract class Test implements \bysoft\interfaces\Test {
     const STATUS_OK = 1;
     const STATUS_RUNNING = 0;
     const STATUS_FAIL = -1;
@@ -13,9 +13,7 @@ class Test implements \bysoft\interfaces\Test {
         $this->status = self::STATUS_RUNNING;
     }
     
-    public function run(){
-        
-    }
+    abstract function run();
     
     public function getStatus(){
         return $this->status;
@@ -23,6 +21,10 @@ class Test implements \bysoft\interfaces\Test {
     
     public function __toString(){
         return $this->errMessage;
+    }
+    
+    public function getName(){
+        return get_class($this);
     }
     
 }

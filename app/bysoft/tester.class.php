@@ -23,8 +23,6 @@ class Tester {
             $this->oColor = new \bysoft\helpers\ShellColors();
         else
             $this->oColor = new \bysoft\helpers\StandardColors();
-        
-        $this->loadTests();
     }
     
     public function __destruct(){
@@ -64,6 +62,7 @@ class Tester {
     }
     public function loadTests() {
         $this->output(self::LEVEL_OK,"Loading tests...\r\n");
+        $this->tests = array();
         foreach (glob(ROOT_DIR . 'app/bysoft/tests/'.self::$config['techno'].'/*.class.php') as $test) {
             $test = '\bysoft\tests\\' . self::$config['techno'] .'\\' . str_replace('.class.php','',basename($test));
             $this->output(self::LEVEL_OK,"\r\nLoading test : [".$test."] ");
@@ -75,7 +74,7 @@ class Tester {
         self::$config = $config;
         self::$failedTests = false;
         $tester = self::getSingleton();
-        
+        $tester->loadTests();
         $tester->output(self::LEVEL_INFO,"\r\n============================================\r\n");
         
         $tester->output(self::LEVEL_OK,"\r\nStarting tests for : ".self::$config['url']."\r\n");

@@ -1,7 +1,7 @@
 <?php
 namespace bysoft\tests\magento;
 
-class File_Disclosure extends \bysoft\_abstract\Http_Disclosure {
+class File_Disclosure extends \bysoft\code\Http_Disclosure {
     
     protected $arrFolders = array();
     protected $arrFiles = array();
@@ -13,7 +13,8 @@ class File_Disclosure extends \bysoft\_abstract\Http_Disclosure {
            array(
                'url' => 'app/etc/local.xml',
                'needle' => '<username>',
-               'message' => 'Password found' 
+               'message' => 'Password found',
+               'assert' => \bysoft\code\Http_Disclosure::ASSERT_NOT_CONTAINING
            )
         );
         
