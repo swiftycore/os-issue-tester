@@ -2,14 +2,14 @@
 namespace bysoft\code\generic;
 
 /**
- *  
+ *
  */
 class Http_Disclosure extends \bysoft\_abstract\Test {
-    
+
     /**
-     * Detect if the response contains the word "Index" 
+     * Detect if the response contains the word "Index"
      * @param string $url
-     * @return bool 
+     * @return bool
      */
     protected function folderIsReadable($url){
         $request = new \bysoft\code\Http_Request($url);
@@ -17,7 +17,7 @@ class Http_Disclosure extends \bysoft\_abstract\Test {
         $response = $request->getResponse();
         return $this->isStringContainingNeedle($response->getContent(), 'Index');  // Index = directory listing
     }
-    
+
     protected function fileIsContainingNeedle($url,$needle){
         $request = new \bysoft\code\Http_Request($url);
         $request->setReturnTransfer();
@@ -25,29 +25,35 @@ class Http_Disclosure extends \bysoft\_abstract\Test {
         $response = $request->getResponse();
         return $this->isStringContainingNeedle($response->getContent(), $needle);
     }
-    
+
     protected function fileIsNotContainingNeedle($url,$needle){
         if($this->fileIsContainingNeedle($url, $needle))
             return false;
         return true;
     }
-    
+
     protected function setErrorMessage($test){
         $host = \bysoft\Tester::$config['url'];
         $this->errMessage .= "\t". $host. $test['url'] . "  => ".$test['message'].".\r\n";
         $this->status = self::STATUS_FAIL;
     }
-    
-    
+
+    protected function isErrorCode($url, $goodCode = '200'){
+        $request = new \bysoft\code\Http_Request($url);
+        $request->request();
+        $response = $request->getResponse();
+        return $response->getCode() == $goodCode;
+    }
+
     /**
      * Run this test
-     * @return $this->status 
+     * @return $this->status
      */
     public function run(){
 
         $this->status = self::STATUS_RUNNING;
         $this->errMessage = "FILESYSTEM DISCLOSURE\r\n";
-        
+
         $host = \bysoft\Tester::$config['url'];
 
         if(!empty($this->arrFiles)){
@@ -79,6 +85,17 @@ class Http_Disclosure extends \bysoft\_abstract\Test {
                 $arrFolder['message'] = 'Directory listing allowed';
                 if($this->folderIsReadable($host.$folder)){
                     $this->setErrorMessage($arrFolder);
+                }
+            }
+        }
+        if(!empty($this->arrUrlCode)){
+            $arrUrlCode = array();
+            foreach($this->arrUrlCode as $urlCode){
+                $arrUrlCode['url'] = $urlCode['queryString'];
+                $arrUrlCode['message'] = isset($urlCode['message'])?$urlCode['message']:'Bad url status';
+                $goodCode = isset($urlCode['goodCode'])?$urlCode['goodCode']:'200';
+                if(!$this->isErrorCode($host.$urlCode['queryString'], $goodCode)){
+                    $this->setErrorMessage($arrUrlCode);
                 }
             }
         }

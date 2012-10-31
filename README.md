@@ -7,6 +7,8 @@ Available checks :
 	- Check if the app/etc/local.xml file is readable
 	- Check if the var/ or app/ folder are readable (Directory Listing, HTTP/200)
 	- Check if the XMLRPC disclosure is patched
+	- Check if the homepage return a good status HTTP/200
+	- Check if the nonexistent page return a good status HTTP/404
 
 - Joomla :
 	- Basic check of some folders like "tmp/", "installation/", ... which don't have to be readable

@@ -8,15 +8,15 @@ class Http_Request {
     protected $content = null;
     protected $code = null;
     protected $isXMLRPC = false;
-    
+
     public function addHeader($header){
         $this->headers[] = $header;
     }
-    
+
     private function setHeaders(){
         if(empty($this->headers))
             return;
-        curl_setopt($this->curlHandler, CURLOPT_HTTPHEADER, $this->headers);    
+        curl_setopt($this->curlHandler, CURLOPT_HTTPHEADER, $this->headers);
     }
     public function setXMLRPC($bool = true){
         $this->isXMLRPC = $bool;
@@ -50,6 +50,6 @@ class Http_Request {
         return $this->response;
     }
     public function __destruct(){
-        
+
     }
 }
