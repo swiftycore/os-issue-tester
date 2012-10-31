@@ -1,18 +1,10 @@
 <?php
-namespace bysoft\code;
+namespace bysoft\code\generic;
 
 /**
  *  
  */
 class Http_Disclosure extends \bysoft\_abstract\Test {
-    const ASSERT_CONTAINING = 1;
-    const ASSERT_NOT_CONTAINING = 2;
-    
-    protected function isStringContainingNeedle($string,$needle){
-        if(strpos($string,$needle)===false)
-            return false;
-        return true;
-    }
     
     /**
      * Detect if the response contains the word "Index" 

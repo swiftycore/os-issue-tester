@@ -1,7 +1,7 @@
 <?php
 namespace bysoft\tests\magento;
 
-class Crawl_Disclosure extends \bysoft\code\Http_Disclosure {
+class Crawl_Disclosure extends \bysoft\code\generic\Http_Disclosure {
     
     protected $arrFolders = array();
     protected $arrFiles = array();
@@ -12,7 +12,7 @@ class Crawl_Disclosure extends \bysoft\code\Http_Disclosure {
            array(
                'url' => 'robots.txt',
                'needle' => 'Disallow *',
-               'assert' =>  \bysoft\code\Http_Disclosure::ASSERT_CONTAINING,
+               'assert' =>  \bysoft\code\generic\Http_Disclosure::ASSERT_CONTAINING,
                'message' => 'Site is crawlable' 
            )
         );
